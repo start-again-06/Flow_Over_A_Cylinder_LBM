@@ -43,6 +43,7 @@ This simulation follows the Lattice Boltzmann Method (LBM) using the D2Q9 model:
 
 The velocity field is initialized with a uniform profile at the inlet.
 A circular obstacle is defined in the flow domain.
+
 2️⃣ LBM Evolution:
 
 Collision step: Uses the BGK model with relaxation parameter ω.
@@ -51,6 +52,7 @@ Boundary conditions:
 Bounce-back for obstacles (solid walls).
 Zou-He velocity BCs at the inlet.
 Free-flow BCs at the outlet.
+
 3️⃣ Visualization:
 
 The velocity magnitude is plotted in real time.
