@@ -1,5 +1,3 @@
-# Flow_Over_A_Cylinder_LBM
-
 # Flow Over A Cylinder - Lattice Boltzmann Method (LBM) 🚀
 
 ## Overview
