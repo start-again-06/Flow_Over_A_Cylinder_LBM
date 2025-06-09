@@ -64,12 +64,14 @@ Velocity magnitude plotted in real-time.
 Parameter Tuning 🎛️
 Modify these variables in lbm_simulation.py to customize the simulation:
 
-Parameter	Description	Default Value
-Re	Reynolds number	110.0
-nx, ny	Grid size (width × height)	420 × 180
-maxIter	Simulation iterations	200000
-uLB	Inlet velocity	0.04
-cx, cy, r	Obstacle center and radius	nx//4, ny//2, ny//9
+| Parameter | Description              | Default Value         |
+|-----------|--------------------------|-----------------------|
+| Re        | Reynolds number          | 110.0                 |
+| nx, ny    | Grid size (width × height)| 420 × 180             |
+| maxIter   | Number of simulation iterations | 200000          |
+| uLB       | Inlet velocity           | 0.04                  |
+| cx, cy, r | Obstacle center (x, y) and radius | nx//4, ny//2, ny//9 |
+
 
 Example Output 📊
 The simulation produces a velocity magnitude field visualizing vortex shedding behind the cylinder.
