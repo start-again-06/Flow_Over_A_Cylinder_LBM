@@ -1,91 +1,123 @@
-# Flow Over A Cylinder - Lattice Boltzmann Method (LBM) 🚀
-
-## Overview
-This repository contains a Python implementation of the Lattice Boltzmann Method (LBM) for simulating fluid flow past a circular obstacle. The simulation visualizes velocity magnitude over time, demonstrating vortex shedding at moderate Reynolds numbers.
+# Flow Over a Cylinder  
+## Fluid Flow Simulation using Lattice Boltzmann Method (LBM)
 
 ---
 
-## Features
-✅ D2Q9 Lattice for 2D flow simulation  
-✅ Bounce-back boundary conditions for solid obstacles  
-✅ Inlet velocity profile for flow initialization  
-✅ Live visualization of velocity magnitude using matplotlib  
-✅ Adjustable Reynolds number for different flow regimes  
+## System Overview
+This repository implements a **2D Lattice Boltzmann Method (LBM)** solver to simulate incompressible fluid flow past a circular cylinder. The simulation captures **vortex shedding behavior** at moderate Reynolds numbers and provides real-time visualization of the **velocity magnitude field**.
+
+The implementation is designed for numerical clarity, educational use, and easy parameter tuning.
 
 ---
 
-## Installation
+## High-Level Architecture
 
-Clone the repository:
-```bash
-git clone https://github.com/yourusername/lbm-flow.git
-cd lbm-flow
-Install dependencies (ensure Python 3.x is installed):
+### Computational Domain Layer
+- Model: D2Q9 lattice (2D, 9 velocity directions)
+- Rectangular computational grid
+- Circular cylinder embedded as a solid obstacle
+- Boolean mask used for solid nodes
 
-bash
-Copy
-Edit
-pip install numpy matplotlib
-Usage
-Run the simulation script:
+---
 
-bash
-Copy
-Edit
-python lbm_simulation.py
-By default, the simulation runs for 200,000 iterations. You can adjust parameters like domain size, velocity, and Reynolds number inside the script.
+### Initialization Layer
+- Uniform inlet velocity profile
+- Density field initialized to equilibrium
+- Cylinder geometry defined using center and radius
+- Reynolds number controls the flow regime
 
-How It Works 🏎️
-This simulation follows the Lattice Boltzmann Method (LBM) using the D2Q9 model:
+---
 
-1️⃣ Initialization:
-Velocity field initialized with a uniform profile at the inlet.
+### LBM Core Solver Layer
 
-Circular obstacle defined in the flow domain.
+#### Collision Step
+- BGK (Bhatnagar–Gross–Krook) collision model
+- Relaxation parameter (ω) derived from kinematic viscosity
+- Distributions relax toward local equilibrium
 
-2️⃣ LBM Evolution:
-Collision step: Uses the BGK model with relaxation parameter ω.
+#### Streaming Step
+- Particle distributions streamed to neighboring lattice nodes
+- Propagation based on D2Q9 discrete velocity set
 
-Streaming step: Distributes densities to neighboring nodes.
+---
 
-Boundary conditions:
+### Boundary Condition Layer
+- Inlet: Zou–He velocity boundary condition
+- Outlet: Free-flow (zero-gradient) condition
+- Cylinder: Bounce-back boundary (no-slip)
+- Domain walls: Implicit no-slip via bounce-back
 
-Bounce-back for obstacles (solid walls)
+---
 
-Zou-He velocity BCs at the inlet
+### Visualization Layer
+- Real-time plotting using `matplotlib`
+- Velocity magnitude field updated periodically
+- Clearly visualizes wake formation and vortex shedding
 
-Free-flow BCs at the outlet
+---
 
-3️⃣ Visualization:
-Velocity magnitude plotted in real-time.
+## Parameter Configuration
 
-Parameter Tuning 🎛️
-Modify these variables in lbm_simulation.py to customize the simulation:
+| Parameter | Description | Default Value |
+|---------|------------|---------------|
+| Re | Reynolds number | 110.0 |
+| nx, ny | Grid resolution (width × height) | 420 × 180 |
+| maxIter | Number of iterations | 200000 |
+| uLB | Inlet velocity magnitude | 0.04 |
+| cx, cy, r | Cylinder center (x, y) and radius | nx//4, ny//2, ny//9 |
 
-| Parameter | Description              | Default Value         |
-|-----------|--------------------------|-----------------------|
-| Re        | Reynolds number          | 110.0                 |
-| nx, ny    | Grid size (width × height)| 420 × 180             |
-| maxIter   | Number of simulation iterations | 200000          |
-| uLB       | Inlet velocity           | 0.04                  |
-| cx, cy, r | Obstacle center (x, y) and radius | nx//4, ny//2, ny//9 |
+All parameters can be modified inside `lbm_simulation.py`.
 
+---
 
-Example Output 📊
-The simulation produces a velocity magnitude field visualizing vortex shedding behind the cylinder.
+## Execution Flow
+1. Initialize lattice, density, and velocity fields  
+2. Define circular obstacle geometry  
+3. Apply inlet and outlet boundary conditions  
+4. Perform collision step (BGK relaxation)  
+5. Perform streaming step  
+6. Enforce bounce-back at obstacle nodes  
+7. Compute macroscopic velocity field  
+8. Visualize velocity magnitude  
 
-References & Further Reading 📚
-Succi, S. (2001). The Lattice Boltzmann Equation for Fluid Dynamics and Beyond.
+---
 
-Krüger, T. et al. (2017). The Lattice Boltzmann Method: Principles and Practice.
+## Dependencies
+- Python 3.x  
+- NumPy  
+- Matplotlib  
 
-Wikipedia: Lattice Boltzmann Method
+## Example Output
+- Velocity magnitude contours showing vortex shedding  
+- Alternating wake structures downstream of the cylinder  
+- Stable laminar-to-unsteady transition at moderate Reynolds numbers  
 
-License 📜
-This project is licensed under the MIT License. Feel free to use and modify it.
+---
 
-Just replace `https://github.com/yourusername/lbm-flow.git` with your actual repo URL and paste this into your README.md.
+## Scalability & Extensibility
+- Extendable to moving or deformable boundaries  
+- Can include force coefficient computation (drag and lift: Cd, Cl)  
+- Suitable for CFD education and research prototyping  
+- Performance can be improved using Numba, CuPy, or GPU acceleration  
 
+---
 
+## Applications
+- Computational Fluid Dynamics (CFD) education  
+- Wake flow and vortex shedding analysis  
+- Validation and benchmarking of LBM solvers  
+- Research-oriented fluid simulation prototyping  
+
+---
+
+## References
+- Succi, S. (2001). *The Lattice Boltzmann Equation for Fluid Dynamics and Beyond*  
+- Krüger, T. et al. (2017). *The Lattice Boltzmann Method: Principles and Practice*  
+- Wikipedia: Lattice Boltzmann Method  
+
+---
+
+## License
+MIT License. Free to use, modify, and distribute for academic and research purposes.
 
 
